@@ -48,8 +48,7 @@ Step 4: GMAIL_ADD_LABEL { message_id: "{{item.id}}", label_id: "{{steps.step1.id
 
 ## Full pattern library
 
-See `patterns/v1/` for the complete set with examples and anti-patterns:
-
+### v1 — Core
 - [00-why-agentic-ops](patterns/v1/00-why-agentic-ops.md)
 - [01-trigger-design](patterns/v1/01-trigger-design.md)
 - [02-dedup-gates](patterns/v1/02-dedup-gates.md)
@@ -60,3 +59,20 @@ See `patterns/v1/` for the complete set with examples and anti-patterns:
 - [07-error-handling](patterns/v1/07-error-handling.md)
 - [08-composed-email-approval](patterns/v1/08-composed-email-approval.md)
 - [09-reports-and-knowledge-storage](patterns/v1/09-reports-and-knowledge-storage.md)
+- [10-person-research-ladder](patterns/v1/10-person-research-ladder.md)
+- [11-company-research-ladder](patterns/v1/11-company-research-ladder.md)
+
+### v2 — Production hardening
+- [10-observability](patterns/v2/10-observability.md)
+- [11-human-in-the-loop](patterns/v2/11-human-in-the-loop.md)
+- [12-idempotency](patterns/v2/12-idempotency.md)
+- [13-multi-agent-handoff](patterns/v2/13-multi-agent-handoff.md)
+- [14-secret-and-credential-management](patterns/v2/14-secret-and-credential-management.md)
+
+### v3 — Anti-patterns
+- [anti-pattern-prompt-in-loop](patterns/v3/anti-pattern-prompt-in-loop.md)
+- [anti-pattern-fire-and-forget](patterns/v3/anti-pattern-fire-and-forget.md)
+- [anti-pattern-god-workflow](patterns/v3/anti-pattern-god-workflow.md)
+- [anti-pattern-llm-as-router](patterns/v3/anti-pattern-llm-as-router.md)
+- [anti-pattern-missing-dedup](patterns/v3/anti-pattern-missing-dedup.md)
+- [anti-pattern-event-for-intake](patterns/v3/anti-pattern-event-for-intake.md)

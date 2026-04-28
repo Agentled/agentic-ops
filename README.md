@@ -56,21 +56,31 @@ Copy-paste Gmail polling query: `-label:processed newer_than:1d`
 | [05-child-workflow-contracts](patterns/v1/05-child-workflow-contracts.md) | Composable workflows with typed return contracts | Child workflows use `return`, not `milestone`; always define a typed return contract. |
 | [06-conditional-routing](patterns/v1/06-conditional-routing.md) | Conditions that actually fire | Use `criteria`/`variable` (not `conditions`/`field`) — wrong field names silently skip steps. |
 | [07-error-handling](patterns/v1/07-error-handling.md) | skip vs stop vs wait | `skip` for optional data, `stop` for hard prerequisites, `wait` for async completion. |
+| [08-composed-email-approval](patterns/v1/08-composed-email-approval.md) | Composed email with approval gate | One AI step generates + sends; never separate draft + send actions. |
+| [09-reports-and-knowledge-storage](patterns/v1/09-reports-and-knowledge-storage.md) | Report rendering + KG persistence | Always render reports via a config layout; persist structured results to the KG. |
+| [10-person-research-ladder](patterns/v1/10-person-research-ladder.md) | Person research: signal-based lookup + fallback ladder | Pick the lookup by the strongest input signal; fall down the ladder, not across. |
+| [11-company-research-ladder](patterns/v1/11-company-research-ladder.md) | Company research: match source to question | LinkedIn for people, website for positioning, directories for financials. |
 
-### v2 — Coming soon
+### v2 — Production hardening
 
-- `08-observability` — Structured logging, execution tracing, alerting on silent failures
-- `09-human-in-the-loop` — Approval gates, async review, timeout and escalation
-- `10-idempotency` — Safe retries, dedup keys, exactly-once guarantees at step level
-- `11-multi-agent-handoff` — Passing context between agents without data loss
-- `12-secret-and-credential-management` — Env vars, rotation, per-user vs per-workspace scoping
+| File | Pattern | One-line rule |
+|------|---------|---------------|
+| [10-observability](patterns/v2/10-observability.md) | Structured logging, execution tracing, alerting on silent failures | Declare a business-outcome assertion and emit count signals at every fetch, loop, and write. |
+| [11-human-in-the-loop](patterns/v2/11-human-in-the-loop.md) | Approval gates, async review, timeout and escalation | Every gate needs notification, preview, timeout, and escalation; route to a role, default to the safe action. |
+| [12-idempotency](patterns/v2/12-idempotency.md) | Safe retries, dedup keys, exactly-once at step level | Every side-effect step needs a deterministic idempotency key derived from execution + inputs. |
+| [13-multi-agent-handoff](patterns/v2/13-multi-agent-handoff.md) | Passing context between agents without prompt drift | Pass typed structured payloads and always include the original input as an immutable reference. |
+| [14-secret-and-credential-management](patterns/v2/14-secret-and-credential-management.md) | Env vars, rotation, per-user vs per-workspace scoping | Reference credentials by name and narrowest scope; never inline secrets in workflow JSON or prompts. |
 
 ### v3 — Anti-patterns library
 
-- `anti-pattern-prompt-in-loop` — Calling LLM per iteration when batch works
-- `anti-pattern-fire-and-forget` — Async steps with no completion signal
-- `anti-pattern-god-workflow` — 30-step monoliths vs composable child workflows
-- `anti-pattern-llm-as-router` — AI for binary decisions a condition handles for free
+| File | Anti-pattern | One-line rule |
+|------|-------------|---------------|
+| [anti-pattern-prompt-in-loop](patterns/v3/anti-pattern-prompt-in-loop.md) | Calling LLM per iteration when batch works | Default to a single batch prompt with array output; loop only for distinct per-item tool calls. |
+| [anti-pattern-fire-and-forget](patterns/v3/anti-pattern-fire-and-forget.md) | Async steps with no completion signal | Async dispatch is not async completion; wait on the completion event, not the dispatch. |
+| [anti-pattern-god-workflow](patterns/v3/anti-pattern-god-workflow.md) | 30-step monoliths vs composable child workflows | If a workflow has > ~15 steps or reusable slices, split into orchestrator + typed children. |
+| [anti-pattern-llm-as-router](patterns/v3/anti-pattern-llm-as-router.md) | AI for binary decisions a condition handles for free | Use AI for structured output, use conditions to branch on it. |
+| [anti-pattern-missing-dedup](patterns/v3/anti-pattern-missing-dedup.md) | Polling workflows without a dedup gate (the cost math) | Polling without dedup burns credits proportional to source size × poll frequency. |
+| [anti-pattern-event-for-intake](patterns/v3/anti-pattern-event-for-intake.md) | App-event triggers where polling + label dedup is correct | Default to scheduled polling with label-based dedup for email/document intake. |
 
 ---
 
